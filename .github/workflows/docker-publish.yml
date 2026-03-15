@@ -1,0 +1,33 @@
+name : Build and Publish Docker Image
+
+on: 
+    push:
+        branches:
+            - main
+
+jobs:
+    docker:
+        runs-on: ubuntu-latest
+
+        permissions:
+            contents: read
+            packages: write
+        
+        steps:
+            - name: Checkout do Codigo
+              uses: actions/checkout@v4
+
+            - name: Login no Github Container Registry
+              uses: docker/login-action@v3
+              with:
+                registry: ghcr.io
+                username: ${{github.actor}}
+                password: ${{secrets.GITHUB_TOKEN}}
+
+            - name: Build e push da imagem
+              uses: docker/build-push-action@v6
+              with:
+                context: .
+                file: ./docker/Dockerfile
+                push: true
+                tags: ghcr.io/ellifas/go-devops-lab:latest 
