@@ -28,6 +28,6 @@ jobs:
               uses: docker/build-push-action@v6
               with:
                 context: .
-                file: ./docker/Dockerfile
+                file: ./Docker/Dockerfile
                 push: true
                 tags: ghcr.io/ellifas/go-devops-lab:latest 
